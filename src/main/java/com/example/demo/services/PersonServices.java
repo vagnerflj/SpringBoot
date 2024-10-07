@@ -1,10 +1,12 @@
 package com.example.demo.services;
 
-import com.example.demo.exceptions.ResourceNotFouldException;
+
+import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.model.Person;
 import com.example.demo.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +31,13 @@ public class PersonServices {
         logger.info("Finding one person!");
 
         Person person = new Person();
-        person.setId(counter.incrementAndGet());
+
         person.setFirstName("Vagner");
         person.setLastName("Ferreira");
         person.setAddress("Telemaco borba");
         person.setGender("Male");
 
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFouldException("No records fould for this ID!"));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records fould for this ID!"));
     }
     public Person create(Person person) {
 
@@ -47,7 +49,7 @@ public class PersonServices {
 
         logger.info("Updating one person!");
 
-        var entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFouldException("No records fould for this ID!"));
+        var entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records fould for this ID!"));
 
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
@@ -58,13 +60,11 @@ public class PersonServices {
 
         return repository.save(person);
     }
+    @Transactional
     public void delete(Long id) {
-
         logger.info("Deleting one person!");
-
-        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFouldException("No records fould for this ID!"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         repository.delete(entity);
-
     }
 
 }

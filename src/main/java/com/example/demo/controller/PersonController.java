@@ -5,6 +5,7 @@ import com.example.demo.model.Person;
 import com.example.demo.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,10 +40,10 @@ public class PersonController {
 	public Person update(@RequestBody Person person){
 		return service.update(person);
 	}
-	@RequestMapping(value = "/{id}",
-			method=RequestMethod.DELETE)
-	public void delete(@PathVariable(value = "id") Long id){
-		service.findById(id);
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 
