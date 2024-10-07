@@ -13,6 +13,7 @@ class PersonRepositoryTest{
 
     @Autowired
     private PersonRepository repository;
+
     @DisplayName("Given Person Object When Save then Return Saved Person")
     @Test
     void testGivenPersonObject_WhenSave_thenReturnSavedPerson(){
@@ -43,6 +44,21 @@ class PersonRepositoryTest{
         //Then
         assertNotNull(personList);
         assertEquals(2, personList.size());
+    }
+    @DisplayName("Given Person Object When FindById then Return Person Object")
+    @Test
+    void testGivenPersonObject_WhenFindById_thenReturnPersonObject(){
+        //Given
+        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
+
+        repository.save(person0);
+        //When
+        Person savedPerson = repository.findById(person0.getId()).get();
+
+
+                //Then
+        assertNotNull(savedPerson);
+        assertEquals(person0.getId(), savedPerson.getId());
     }
 
 }
