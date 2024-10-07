@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.exceptions.UnsupportedMathOperationException;
 import com.example.demo.model.Person;
 import com.example.demo.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class PersonController {
 	@RequestMapping(value = "/{id}",
 			method=RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findById(@PathVariable(value = "id") String id){
+	public Person findById(@PathVariable(value = "id") Long id){
 		return service.findById(id);
 	}
 	@RequestMapping(method=RequestMethod.POST,
@@ -42,7 +41,7 @@ public class PersonController {
 	}
 	@RequestMapping(value = "/{id}",
 			method=RequestMethod.DELETE)
-	public void delete(@PathVariable(value = "id") String id){
+	public void delete(@PathVariable(value = "id") Long id){
 		service.findById(id);
 	}
 

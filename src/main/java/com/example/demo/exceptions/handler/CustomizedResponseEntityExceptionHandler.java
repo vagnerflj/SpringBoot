@@ -1,7 +1,7 @@
 package com.example.demo.exceptions.handler;
 
 import com.example.demo.exceptions.ExceptionResponse;
-import com.example.demo.exceptions.UnsupportedMathOperationException;
+import com.example.demo.exceptions.ResourceNotFouldException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,8 +28,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(
+    @ExceptionHandler(ResourceNotFouldException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(
             Exception ex, WebRequest request) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
@@ -37,7 +37,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 ex.getMessage(),
                 request.getDescription(false));
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
 }
