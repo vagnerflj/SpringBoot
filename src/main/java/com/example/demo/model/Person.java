@@ -35,7 +35,7 @@ public class Person implements Serializable {
         this.email = email;
     }
 
-    @Column(name = "email", nullable = false, length = 6)
+    @Column(name = "email", nullable = false, length = 16)
     private String email;
 
     public Person() {}
@@ -107,11 +107,12 @@ public class Person implements Serializable {
                 Objects.equals(firstName, person.firstName) &&
                 Objects.equals(lastName, person.lastName) &&
                 Objects.equals(address, person.address) &&
-                Objects.equals(gender, person.gender);
+                Objects.equals(gender, person.gender) &&
+                Objects.equals(email, person.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, address, gender, email);
     }
 }
