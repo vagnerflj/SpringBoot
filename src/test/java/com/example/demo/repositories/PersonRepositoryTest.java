@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 import com.example.demo.model.Person;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,20 @@ class PersonRepositoryTest{
     @Autowired
     private PersonRepository repository;
 
+    private Person person0;
+    @BeforeEach
+    public void setup(){
+        //Given
+         person0 = new Person("Vagner",
+                "Ferreira",
+                "Parana - Brasil",
+                "Male",
+                "vagner@gmail.com");
+    }
+
     @DisplayName("Given Person Object When Save then Return Saved Person")
     @Test
     void testGivenPersonObject_WhenSave_thenReturnSavedPerson(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         //When
         Person savedPerson = repository.save(person0);
 
@@ -31,9 +40,6 @@ class PersonRepositoryTest{
     @DisplayName("Given Person List When FindAll then Return PersonList")
     @Test
     void testGivenPersonList_WhenFindAll_thenReturnPersonList(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         Person person1 = new Person("Leonardo", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
 
         repository.save(person0);
@@ -49,9 +55,6 @@ class PersonRepositoryTest{
     @DisplayName("Given Person Object When FindById then Return Person Object")
     @Test
     void testGivenPersonObject_WhenFindById_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findById(person0.getId()).get();
@@ -63,9 +66,6 @@ class PersonRepositoryTest{
     @DisplayName("Given Person Object When FindByEmail then Return Person Object")
     @Test
     void testGivenPersonObject_WhenFindByEmail_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findByEmail(person0.getEmail()).get();
@@ -77,9 +77,6 @@ class PersonRepositoryTest{
     @DisplayName("Given Person Object When Update Person then Return Update Person Object")
     @Test
     void testGivenPersonObject_WhenUpdatePerson_thenReturnUpdatePersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findById(person0.getId()).get();
@@ -96,9 +93,6 @@ class PersonRepositoryTest{
     @DisplayName("Given Person Object When Delete then Remove Person")
     @Test
     void testGivenPersonObject_WhenDelete_thenRemovePerson(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         repository.deleteById(person0.getId());
@@ -111,9 +105,6 @@ class PersonRepositoryTest{
     @DisplayName("Given FirstName And LastName When FindByJPQL then Return Person Object")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByJPQL_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findByJPQL("Vagner", "Ferreira");
@@ -126,9 +117,6 @@ class PersonRepositoryTest{
     @DisplayName("Given FirstName And LastName When FindByJPQL then Return Person Object")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByJPQLNamedParameters_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findByJPQLNamedParameters("Vagner", "Ferreira");
@@ -141,9 +129,6 @@ class PersonRepositoryTest{
     @DisplayName("Given FirstName And LastName When FindByNativeSQL then Return Person Object")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByNativeSQL_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findByNativeSQL("Vagner", "Ferreira");
@@ -156,9 +141,6 @@ class PersonRepositoryTest{
     @DisplayName("Given FirstName And LastName When FindByNativeSQLwithNamedParameters then Return Person Object")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByNativeSQLwithNamedParameters_thenReturnPersonObject(){
-        //Given
-        Person person0 = new Person("Vagner", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
-
         repository.save(person0);
         //When
         Person savedPerson = repository.findByNativeSQLwithNamedParameters("Vagner", "Ferreira");
