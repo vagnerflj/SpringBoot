@@ -11,17 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -93,6 +87,19 @@ public class PersonServicesTest {
         // Then
         assertTrue(personList.isEmpty());
         assertEquals(0, personList.size());
+    }
+    @DisplayName("Given Persons Id When FindById Person then Return Persons Object")
+    @Test
+    void testeGivenPersonId_WhenFindById_thenReturnPersonObject(){
+        // Given
+        given(repository.findById(anyLong())).willReturn(Optional.of(person0));
+
+        // When
+        Person savedPerson = services.findById(1L);
+
+        // Then
+        assertNotNull(savedPerson);
+        assertEquals("Vagner", savedPerson.getFirstName());
     }
 
 
