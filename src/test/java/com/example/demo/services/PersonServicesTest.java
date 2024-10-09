@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -64,6 +65,20 @@ public class PersonServicesTest {
         });
         // Then
         verify(repository, never()).save(any(Person.class));
+    }
+    @DisplayName("Given Persons List When FindAll Person then Return Persons List")
+    @Test
+    void testeGivenPersonsList_WhenFindAllPerson_thenReturnPersonsList(){
+        // Given
+        Person person1 = new Person("Leonardo", "Ferreira", "Parana - Brasil", "Male", "vagner@gmail.com");
+
+        given(repository.findAll()).willReturn(List.of(person0, person1));
+
+        // When
+        List<Person> personList = services.findAll();
+        // Then
+        assertNotNull(personList);
+        assertEquals(2, personList.size());
     }
 
 
