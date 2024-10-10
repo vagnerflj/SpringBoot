@@ -88,17 +88,15 @@ public class PersonControllerTest {
 				"Male")
 		);
 		given(service.findAll()).willReturn(persons);
+
 		// When / Act
-		ResultActions response = mockMvc.perform(post("/person")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(person)));
+		ResultActions response = mockMvc.perform(get("/person"));
 
 		// Then / Assert
-		response.andDo(print()).
+		response.
 				andExpect(status().isOk())
-				.andExpect(jsonPath("$.firstName", is(person.getFirstName())))
-				.andExpect(jsonPath("$.lastName", is(person.getLastName())))
-				.andExpect(jsonPath("$.email", is(person.getEmail())));
+				.andDo(print())
+				.andExpect(jsonPath("$.size()", is(persons.size())));
 	}
 
 }
