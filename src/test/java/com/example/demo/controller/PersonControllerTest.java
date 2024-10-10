@@ -73,5 +73,32 @@ public class PersonControllerTest {
 				.andExpect(jsonPath("$.lastName", is(person.getLastName())))
 				.andExpect(jsonPath("$.email", is(person.getEmail())));
 	}
+	@Test
+	@DisplayName("Given List Of Person Object When FindAll Persons then Return Persons List")
+	void testGivenListOfPersonObject_WhenFindAllPersons_thenReturnPersonsList() throws JsonProcessingException, Exception {
+
+		// Given / Arrange
+		List<Person> persons = new ArrayList<>();
+		persons.add(person);
+		persons.add(new Person(
+				"Leonardo",
+				"Costa",
+				"leonardo@erudio.com.br",
+				"Uberlândia - Minas Gerais - Brasil",
+				"Male")
+		);
+		given(service.findAll()).willReturn(persons);
+		// When / Act
+		ResultActions response = mockMvc.perform(post("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(person)));
+
+		// Then / Assert
+		response.andDo(print()).
+				andExpect(status().isOk())
+				.andExpect(jsonPath("$.firstName", is(person.getFirstName())))
+				.andExpect(jsonPath("$.lastName", is(person.getLastName())))
+				.andExpect(jsonPath("$.email", is(person.getEmail())));
+	}
 
 }
