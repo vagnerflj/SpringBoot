@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -116,6 +117,22 @@ public class PersonControllerTest {
 				.andExpect(jsonPath("$.firstName", is(person.getFirstName())))
 				.andExpect(jsonPath("$.lastName", is(person.getLastName())))
 				.andExpect(jsonPath("$.email", is(person.getEmail())));
+	}
+	@Test
+	@DisplayName("JUnit test Given Invalid PersonId When FidById then Return Not Found")
+	void testGivenInvalidPersonId_WhenFidById_thenReturnNotFound() throws JsonProcessingException, Exception {
+
+		// Given / Arrange
+		long personId = 1L;
+		given(service.findById(personId)).willThrow(ResourceNotFoundException.class);
+
+		// When / Act
+		ResultActions response = mockMvc.perform(get("/person/{id}", personId));
+
+		// Then / Assert
+		response.
+				andExpect(status().isNotFound())
+				.andDo(print());
 	}
 
 }

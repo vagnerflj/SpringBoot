@@ -23,8 +23,12 @@ public class PersonController {
 	}
 	@GetMapping(value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findById(@PathVariable(value = "id") Long id){
-		return service.findById(id);
+	public ResponseEntity<Person> findById(@PathVariable(value = "id") Long id){
+		try{
+			return ResponseEntity.ok(service.findById(id));
+		}catch (Exception e){
+			return ResponseEntity.notFound().build();
+		}
 	}
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
